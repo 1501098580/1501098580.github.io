@@ -33,4 +33,46 @@
         <tag>python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>深度学习基础一</title>
+    <url>/post/9f799b3c.html</url>
+    <content><![CDATA[<h1 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h1><h1 id="全连接网络"><a href="#全连接网络" class="headerlink" title="全连接网络"></a>全连接网络</h1><h1 id="反向传播与梯度下降"><a href="#反向传播与梯度下降" class="headerlink" title="反向传播与梯度下降"></a>反向传播与梯度下降</h1><h1 id="cnn卷积"><a href="#cnn卷积" class="headerlink" title="cnn卷积"></a>cnn卷积</h1><p>相当于滤波器</p>
+<h1 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h1><h3 id="分类损失"><a href="#分类损失" class="headerlink" title="分类损失"></a>分类损失</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1、交叉熵损失CE</span><br><span class="line">用于度量两个函数的分布.</span><br><span class="line"></span><br><span class="line">信息熵:去掉冗余信息后的平均信息量。衡量不确定性，不确定性大，信息熵就越大。</span><br><span class="line">联合熵:</span><br><span class="line">条件熵:</span><br><span class="line">交叉熵CE:</span><br><span class="line">相对熵:</span><br><span class="line">JS散度:</span><br><span class="line">互信息:</span><br><span class="line"></span><br><span class="line">由于交叉熵正负样本平衡，对于正负样本不平衡网络就不能很好的学习</span><br><span class="line">2、平衡交叉熵损失（正负样本不平衡问题）</span><br><span class="line"></span><br><span class="line">3、专注难样本 Focal loss（难易样本）</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="回归损失"><a href="#回归损失" class="headerlink" title="回归损失"></a>回归损失</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1、L1损失</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2、L2损失</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1、sigmod及其改进</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2、relu函数</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>深度学习基础</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+        <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语单词一</title>
+    <url>/post/afe428e5.html</url>
+    <content><![CDATA[<h1 id="A"><a href="#A" class="headerlink" title="A"></a>A</h1>]]></content>
+      <categories>
+        <category>英语</category>
+      </categories>
+      <tags>
+        <tag>英语</tag>
+      </tags>
+  </entry>
 </search>
