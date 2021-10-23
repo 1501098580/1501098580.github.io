@@ -106,3 +106,18 @@
     /* ���´�����ɫ͸����Ϊ0.3 */
     background: rgba(255,255,255,.3);
 }
+
+
+#web_bg {
+  /* ����ͼ��ĵ�ַ��url�����  */
+  background: url(/img/index_img.jpg);
+  /* ����ͼ���ظ� */
+  background-repeat: no-repeat;
+  /* ����ͼ���С */
+  background-size: cover;
+}
+
+
+#web_bg {
+background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+}
