@@ -1224,7 +1224,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff9c25;
+  background: #e30aff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1470,6 +1470,7 @@ pre .javascript .function {
   color: #ff0000;
   display: inline-block;
   margin: 0 5px;
+  animation: iconAnimate 1.33s ease-in-out infinite;
 }
 .powered-by,
 .theme-info {
@@ -2507,4 +2508,8 @@ body {
 .category-list li.active a {
   font-weight: bold;
   color: #000;
+}
+#busuanzi_value_site_pv,
+#busuanzi_value_site_uv {
+  color: #00bfff;
 }
