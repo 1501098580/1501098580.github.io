@@ -34,6 +34,40 @@
       </tags>
   </entry>
   <entry>
+    <title>深度学习之生成网络cyclegan</title>
+    <url>/post/8b28088e.html</url>
+    <content><![CDATA[<h1 id="Cyclegan"><a href="#Cyclegan" class="headerlink" title="Cyclegan"></a>Cyclegan</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">贡献：</span><br><span class="line">	提出了循环一致性损失</span><br><span class="line">	使用非对称的数据就可以进行风格转换</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">总共使用了两队生成器和判别器。</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">循环一致性损失：相当于一张图片风格为A，通过G_AB 生成风格为B的假图 -&gt; fake_B,然后通过 G_BA 生成风格为A假图 fake_A,最终得到的fake_A能够骗过D_A，反之亦然。</span><br><span class="line">A -G_AB&gt; fake_B -G_BA&gt; fake_A</span><br><span class="line">为什么循环一致性损失能够保证在非对称的数据下，图像的内容信息不会改变？</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>生成网络</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+        <tag>深度学习</tag>
+        <tag>生成网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深度学习之生成网络gan</title>
+    <url>/post/f5c1817e.html</url>
+    <content><![CDATA[<h1 id="Gan"><a href="#Gan" class="headerlink" title="Gan"></a>Gan</h1><h1 id="Gan的改进"><a href="#Gan的改进" class="headerlink" title="Gan的改进"></a>Gan的改进</h1>]]></content>
+      <categories>
+        <category>生成网络</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+        <tag>深度学习</tag>
+        <tag>生成网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>深度学习基础一</title>
     <url>/post/9f799b3c.html</url>
     <content><![CDATA[<h1 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h1><h1 id="全连接网络"><a href="#全连接网络" class="headerlink" title="全连接网络"></a>全连接网络</h1><h1 id="反向传播与梯度下降"><a href="#反向传播与梯度下降" class="headerlink" title="反向传播与梯度下降"></a>反向传播与梯度下降</h1><h1 id="cnn卷积"><a href="#cnn卷积" class="headerlink" title="cnn卷积"></a>cnn卷积</h1><p>相当于滤波器</p>
@@ -73,40 +107,6 @@
       </categories>
       <tags>
         <tag>英语</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>深度学习之生成网络cyclegan</title>
-    <url>/post/8b28088e.html</url>
-    <content><![CDATA[<h1 id="Cyclegan"><a href="#Cyclegan" class="headerlink" title="Cyclegan"></a>Cyclegan</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">贡献：</span><br><span class="line">	提出了循环一致性损失</span><br><span class="line">	使用非对称的数据就可以进行风格转换</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">总共使用了两队生成器和判别器。</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">循环一致性损失：相当于一张图片风格为A，通过G_AB 生成风格为B的假图 -&gt; fake_B,然后通过 G_BA 生成风格为A假图 fake_A,最终得到的fake_A能够骗过D_A，反之亦然。</span><br><span class="line">A -G_AB&gt; fake_B -G_BA&gt; fake_A</span><br><span class="line">为什么循环一致性损失能够保证在非对称的数据下，图像的内容信息不会改变？</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>生成网络</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
-        <tag>深度学习</tag>
-        <tag>生成网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>深度学习之生成网络gan</title>
-    <url>/post/f5c1817e.html</url>
-    <content><![CDATA[<h1 id="Gan"><a href="#Gan" class="headerlink" title="Gan"></a>Gan</h1><h1 id="Gan的改进"><a href="#Gan的改进" class="headerlink" title="Gan的改进"></a>Gan的改进</h1>]]></content>
-      <categories>
-        <category>生成网络</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
-        <tag>深度学习</tag>
-        <tag>生成网络</tag>
       </tags>
   </entry>
 </search>
