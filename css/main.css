@@ -1175,7 +1175,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #9190ff;
+  background: #9dff88;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2297,7 +2297,7 @@ embed {
   white-space: nowrap;
 }
 body {
-  background: url("/images/jujijngyi.jpg");
+  background: url("/images/background.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100% 100%;
