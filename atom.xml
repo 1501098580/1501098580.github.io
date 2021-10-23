@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-23T11:16:13.161Z</updated>
+  <updated>2021-10-23T15:17:29.276Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>test</title>
+    <link href="http://example.com/post/d87f7e0c.html"/>
+    <id>http://example.com/post/d87f7e0c.html</id>
+    <published>2021-10-23T15:15:36.000Z</published>
+    <updated>2021-10-23T15:17:29.276Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">test文件</span><br><span class="line">撒很难过船</span><br><span class="line"></span><br><span class="line">大萨达</span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/10/23/eKFWfmxuVjSndR6.jpg"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;test文件&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;撒很难过船&lt;/span&gt;&lt;br&gt;</summary>
+      
+    
+    
+    
+    <category term="人工智能" scheme="http://example.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    
+    <category term="人工智能" scheme="http://example.com/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="python" scheme="http://example.com/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
