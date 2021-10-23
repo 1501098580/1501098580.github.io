@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-23T16:37:47.354Z</updated>
+  <updated>2021-10-23T17:05:55.858Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,62 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>深度学习之生成网络cyclegan</title>
+    <link href="http://example.com/post/8b28088e.html"/>
+    <id>http://example.com/post/8b28088e.html</id>
+    <published>2021-10-23T16:43:40.000Z</published>
+    <updated>2021-10-23T17:05:55.858Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Cyclegan"><a href="#Cyclegan" class="headerlink" title="Cyclegan"></a>Cyclegan</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">贡献：</span><br><span class="line">提出了循环一致性损失</span><br><span class="line">使用非对称的数据就可以进行风格转换</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">总共使用了两队生成器和判别器。</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">循环一致性损失：相当于一张图片风格为A，通过G_AB 生成风格为B的假图 -&gt; fake_B,然后通过 G_BA 生成风格为A假图 fake_A,最终得到的fake_A能够骗过D_A，反之亦然。</span><br><span class="line">A -G_AB&gt; fake_B -G_BA&gt; fake_A</span><br><span class="line">为什么循环一致性损失能够保证在非对称的数据下，图像的内容信息不会改变？</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Cyclegan&quot;&gt;&lt;a href=&quot;#Cyclegan&quot; class=&quot;headerlink&quot; title=&quot;Cyclegan&quot;&gt;&lt;/a&gt;Cyclegan&lt;/h1&gt;&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;t</summary>
+      
+    
+    
+    
+    <category term="生成网络" scheme="http://example.com/categories/%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="人工智能" scheme="http://example.com/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="深度学习" scheme="http://example.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="生成网络" scheme="http://example.com/tags/%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深度学习之生成网络gan</title>
+    <link href="http://example.com/post/f5c1817e.html"/>
+    <id>http://example.com/post/f5c1817e.html</id>
+    <published>2021-10-23T16:43:16.000Z</published>
+    <updated>2021-10-23T17:04:46.423Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Gan"><a href="#Gan" class="headerlink" title="Gan"></a>Gan</h1><h1 id="Gan的改进"><a href="#Gan的改进" class="headerlink" title="Gan的改进"></a>Gan的改进</h1>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Gan&quot;&gt;&lt;a href=&quot;#Gan&quot; class=&quot;headerlink&quot; title=&quot;Gan&quot;&gt;&lt;/a&gt;Gan&lt;/h1&gt;&lt;h1 id=&quot;Gan的改进&quot;&gt;&lt;a href=&quot;#Gan的改进&quot; class=&quot;headerlink&quot; title=&quot;Gan的改进&quot;&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="生成网络" scheme="http://example.com/categories/%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="人工智能" scheme="http://example.com/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="深度学习" scheme="http://example.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="生成网络" scheme="http://example.com/tags/%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>深度学习基础一</title>
@@ -47,7 +103,7 @@
     <link href="http://example.com/post/afe428e5.html"/>
     <id>http://example.com/post/afe428e5.html</id>
     <published>2021-10-23T16:17:38.000Z</published>
-    <updated>2021-10-23T16:37:45.107Z</updated>
+    <updated>2021-10-23T16:38:04.481Z</updated>
     
     <content type="html"><![CDATA[<h1 id="A"><a href="#A" class="headerlink" title="A"></a>A</h1>]]></content>
     
