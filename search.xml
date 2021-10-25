@@ -19,6 +19,18 @@
 ]]></content>
   </entry>
   <entry>
+    <title>pytorch基础</title>
+    <url>/post/cb05edc5.html</url>
+    <content><![CDATA[<h1 id="pytorch基础"><a href="#pytorch基础" class="headerlink" title="pytorch基础"></a>pytorch基础</h1><h3 id="一、tensor"><a href="#一、tensor" class="headerlink" title="一、tensor"></a>一、tensor</h3>]]></content>
+      <categories>
+        <category>pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>pytorch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>pytorch深度学习一</title>
     <url>/post/d9099bcf.html</url>
     <content><![CDATA[<h1 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h1><h3 id="1、线性模型"><a href="#1、线性模型" class="headerlink" title="1、线性模型"></a>1、线性模型</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
@@ -63,6 +75,50 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fig = plt.figure()</span><br><span class="line">ax = Axes3D(fig)</span><br><span class="line">plt.title(&quot;3D&quot;)</span><br><span class="line">ax.plot_surface(xx, yy, zz, cmap=plt.get_cmap(&#x27;rainbow&#x27;)) # 设置曲面的颜色</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://i.loli.net/2021/10/25/gj2lr6tU3s9qZhk.png" alt="image-20211025172320588"></p>
+]]></content>
+      <categories>
+        <category>pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>pytorch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pytorch深度学习三</title>
+    <url>/post/a0d5236b.html</url>
+    <content><![CDATA[<h1 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">使用pytorch实现线性模型</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn </span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+
+<p>数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># x和y数据必须是矩阵，所以如[1.0]</span></span><br><span class="line">x_data = torch.Tensor([[<span class="number">1.0</span>], [<span class="number">2.0</span>], [<span class="number">3.0</span>]])</span><br><span class="line">y_data = torch.Tensor([[<span class="number">2.0</span>], [<span class="number">4.0</span>], [<span class="number">6.0</span>]])</span><br><span class="line">loss_list = []</span><br></pre></td></tr></table></figure>
+
+<p>模型</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LinearModel</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(LinearModel, self).__init__()</span><br><span class="line">        <span class="comment"># 实例化一个linear对象</span></span><br><span class="line">        self.linear = nn.Linear(<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        <span class="comment"># 可调用的对象</span></span><br><span class="line">        y_pred = self.linear(x)</span><br><span class="line">        <span class="keyword">return</span> y_pred</span><br><span class="line">    </span><br><span class="line">model = LinearModel()</span><br></pre></td></tr></table></figure>
+
+<p>优化器和损失函数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># criterion = torch.nn.MSELoss(size_average=False)</span></span><br><span class="line">criterion = torch.nn.MSELoss(reduction = <span class="string">&#x27;sum&#x27;</span>) <span class="comment">#求和</span></span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr = <span class="number">0.01</span>) <span class="comment">#学习率lr = 0.01</span></span><br></pre></td></tr></table></figure>
+
+<p>训练</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 训练</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">500</span>):</span><br><span class="line">    y_pred = model(x_data)</span><br><span class="line">    loss = criterion(y_pred, y_data)</span><br><span class="line">    <span class="comment"># 打印loss对象会自动调用__str__(),不会产生计算图</span></span><br><span class="line">    <span class="built_in">print</span>(epoch, loss.item())</span><br><span class="line">    loss_list.append(loss.item())</span><br><span class="line">    <span class="comment">#每次需要归零，不然梯度会积累</span></span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    <span class="comment"># 反向传播</span></span><br><span class="line">    loss.backward()</span><br><span class="line">    <span class="comment">#参数更新</span></span><br><span class="line">    optimizer.step()</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">0</span> <span class="number">8.456552505493164</span></span><br><span class="line"><span class="number">1</span> <span class="number">4.0267653465271</span></span><br><span class="line"><span class="number">2</span> <span class="number">2.050983428955078</span></span><br><span class="line"><span class="number">3</span> <span class="number">1.167707085609436</span></span><br><span class="line"><span class="number">4</span> <span class="number">0.7708380222320557</span></span><br><span class="line"></span><br><span class="line">...................</span><br><span class="line">...................</span><br><span class="line">...................</span><br><span class="line"></span><br><span class="line"><span class="number">491</span> <span class="number">0.0003971618425566703</span></span><br><span class="line"><span class="number">492</span> <span class="number">0.00039145682239905</span></span><br><span class="line"><span class="number">493</span> <span class="number">0.00038583995774388313</span></span><br><span class="line"><span class="number">494</span> <span class="number">0.0003802851715590805</span></span><br><span class="line"><span class="number">495</span> <span class="number">0.0003748224989976734</span></span><br><span class="line"><span class="number">496</span> <span class="number">0.00036944064777344465</span></span><br><span class="line"><span class="number">497</span> <span class="number">0.00036413324414752424</span></span><br><span class="line"><span class="number">498</span> <span class="number">0.0003588950785342604</span></span><br><span class="line"><span class="number">499</span> <span class="number">0.0003537364536896348</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 画图</span></span><br><span class="line">plt.plot(<span class="built_in">range</span>(<span class="number">500</span>), loss_list)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Loss&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;epoch&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/10/25/cZYV6AWHdvORPFn.png" alt="image-20211025192214494"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;w = &#x27;</span>, model.linear.weight.item())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;b = &#x27;</span>, model.linear.bias.item())</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">w =  <span class="number">1.9874792098999023</span></span><br><span class="line">b =  <span class="number">0.02846282161772251</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Test </span></span><br><span class="line"><span class="comment"># 输入是1×1矩阵，输出也是1×1矩阵</span></span><br><span class="line">x_test = torch.Tensor([[<span class="number">2.0</span>]]) </span><br><span class="line">y_test = model(x_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;y_pred = &#x27;</span>, y_test.data)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">y_pred =  tensor([[<span class="number">4.0034</span>]])</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>pytorch</category>
@@ -128,6 +184,11 @@
       </tags>
   </entry>
   <entry>
+    <title>人脸识别一</title>
+    <url>/post/937cd58.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>注意力机制</title>
     <url>/post/141d1667.html</url>
     <content><![CDATA[<h1 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">注意力机制的核心在于通过计算一个注意力map，来强调最相关的特征，并避免不相关特征的干扰。</span><br><span class="line">获取注意力map的方法可分为两类：无参数、有参数，如图6所示，主要的区别在于注意图中的重要性权重是否可学习：</span><br><span class="line">注意力机制为深度网络提供了突出给定图像中最重要区域的能力</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -145,11 +206,6 @@
         <tag>人工智能</tag>
         <tag>注意力机制</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>人脸识别一</title>
-    <url>/post/937cd58.html</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>深度学习之生成网络cyclegan</title>
