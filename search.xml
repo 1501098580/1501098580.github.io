@@ -476,6 +476,116 @@
       </tags>
   </entry>
   <entry>
+    <title>pytorch基础四</title>
+    <url>/post/a9deff0a.html</url>
+    <content><![CDATA[<h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><p>神经网络可以用torch.nn包来构建。</p>
+<p>现在你对autograd有了一丝了解，nn依赖于autograd来定义模型并对其进行微分。一个 nn.Module 包含层和一个返回输出的 forward(input) 方法。</p>
+<p>例如，请看这个对数字图像进行分类的网络：</p>
+<p><img src="https://i.loli.net/2021/10/26/1Kpka6THP7SDrYz.png" alt="img"></p>
+<p>它是一个简单的前馈网络。它接受输入，一个接一个地将其送入若干层，最后给出输出。</p>
+<p>一个典型的神经网络的训练过程如下。</p>
+<ul>
+<li>定义有一些可学习参数（或权重）的神经网络</li>
+<li>在输入的数据集上进行迭代</li>
+<li>通过网络处理输入</li>
+<li>计算损失（输出离正确值有多远）。</li>
+<li>将梯度传播回网络的参数中</li>
+<li>更新网络的权重，通常使用一个简单的更新规则：权重 = 权重 - 学习率 * 梯度</li>
+</ul>
+<h3 id="定义网络"><a href="#定义网络" class="headerlink" title="定义网络"></a>定义网络</h3><p>让我们来定义这个网络。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Net</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(Net, self).__init__()</span><br><span class="line">        <span class="comment"># 1 input image channel, 6 output channels, 5x5 square convolution</span></span><br><span class="line">        <span class="comment"># kernel</span></span><br><span class="line">        self.conv1 = nn.Conv2d(<span class="number">1</span>, <span class="number">6</span>, <span class="number">5</span>)</span><br><span class="line">        self.conv2 = nn.Conv2d(<span class="number">6</span>, <span class="number">16</span>, <span class="number">5</span>)</span><br><span class="line">        <span class="comment"># an affine operation: y = Wx + b</span></span><br><span class="line">        self.fc1 = nn.Linear(<span class="number">16</span> * <span class="number">5</span> * <span class="number">5</span>, <span class="number">120</span>)  <span class="comment"># 5*5 from image dimension</span></span><br><span class="line">        self.fc2 = nn.Linear(<span class="number">120</span>, <span class="number">84</span>)</span><br><span class="line">        self.fc3 = nn.Linear(<span class="number">84</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        <span class="comment"># Max pooling over a (2, 2) window</span></span><br><span class="line">        x = F.max_pool2d(F.relu(self.conv1(x)), (<span class="number">2</span>, <span class="number">2</span>))</span><br><span class="line">        <span class="comment"># If the size is a square, you can specify with a single number</span></span><br><span class="line">        x = F.max_pool2d(F.relu(self.conv2(x)), <span class="number">2</span>)</span><br><span class="line">        x = torch.flatten(x, <span class="number">1</span>) <span class="comment"># flatten all dimensions except the batch dimension</span></span><br><span class="line">        x = F.relu(self.fc1(x))</span><br><span class="line">        x = F.relu(self.fc2(x))</span><br><span class="line">        x = self.fc3(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = Net()</span><br><span class="line"><span class="built_in">print</span>(net)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Net(</span><br><span class="line">  (conv1): Conv2d(<span class="number">1</span>, <span class="number">6</span>, kernel_size=(<span class="number">5</span>, <span class="number">5</span>), stride=(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">  (conv2): Conv2d(<span class="number">6</span>, <span class="number">16</span>, kernel_size=(<span class="number">5</span>, <span class="number">5</span>), stride=(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">  (fc1): Linear(in_features=<span class="number">400</span>, out_features=<span class="number">120</span>, bias=<span class="literal">True</span>)</span><br><span class="line">  (fc2): Linear(in_features=<span class="number">120</span>, out_features=<span class="number">84</span>, bias=<span class="literal">True</span>)</span><br><span class="line">  (fc3): Linear(in_features=<span class="number">84</span>, out_features=<span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>你只需要定义前向函数，而后向函数（计算梯度的地方）会用autograd自动为你定义。你可以在前向函数中使用任何tensor操作。</p>
+<p>一个模型的可学习参数由net.parameters()返回。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">params = <span class="built_in">list</span>(net.parameters())</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(params))</span><br><span class="line"><span class="built_in">print</span>(params[<span class="number">0</span>].size())  <span class="comment"># conv1&#x27;s .weight</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">10</span></span><br><span class="line">torch.Size([<span class="number">6</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+
+<p>让我们试试一个随机的32x32的输入。注意：这个网络（LeNet）的预期输入尺寸是32x32。要在MNIST数据集上使用这个网络，请将数据集上的图像大小调整为32x32。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">input</span> = torch.randn(<span class="number">1</span>, <span class="number">1</span>, <span class="number">32</span>, <span class="number">32</span>)</span><br><span class="line">out = net(<span class="built_in">input</span>)</span><br><span class="line"><span class="built_in">print</span>(out)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tensor([[ <span class="number">0.0796</span>,  <span class="number">0.0070</span>, -<span class="number">0.0793</span>,  <span class="number">0.0234</span>, -<span class="number">0.0222</span>, -<span class="number">0.0487</span>, -<span class="number">0.0889</span>, -<span class="number">0.0076</span>,</span><br><span class="line">         -<span class="number">0.0486</span>, -<span class="number">0.0754</span>]], grad_fn=&lt;AddmmBackward&gt;)</span><br></pre></td></tr></table></figure>
+
+<p>将所有参数的梯度缓冲区归零，并以随机梯度进行反向传播。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">net.zero_grad()</span><br><span class="line">out.backward(torch.randn(<span class="number">1</span>, <span class="number">10</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意:torch.nn只支持小批次。整个 torch.nn 包只支持小批量样本的输入，而不是单个样本。例如，nn.Conv2d将接收一个4D tensor的nSamples x nChannels x Height x Width。如果你有一个单一的样本，只需使用input.unsqueeze(0)来添加一个虚假的批次维度。</p>
+</blockquote>
+<p>在进一步进行之前，让我们回顾一下到目前为止你所看到的所有的类。</p>
+<p>回顾一下:</p>
+<ul>
+<li>torch.Tensor - 一个多维数组，支持像backward()这样的autograd操作。还可以保存tensor的梯度。</li>
+<li>nn.Module - 神经网络模块。封装参数的便捷方式，方便将其移动到GPU，导出，加载等。</li>
+<li>nn.Parameter - 一种tensor，当分配给一个模块的属性时，会自动注册为一个参数。</li>
+<li>autograd.Function - 实现autograd操作的前向和后向定义。每个Tensor操作至少创建一个Function节点，连接到创建Tensor的函数，并对其历史进行编码。</li>
+</ul>
+<p>目前为止，我们涵盖了:</p>
+<ul>
+<li>定义一个神经网络</li>
+<li>处理输入并向后调用</li>
+</ul>
+<p>还剩下:</p>
+<ul>
+<li>计算损失</li>
+<li>更新网络的权重</li>
+</ul>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p>损失函数接收（输出，目标）一对输入，并计算出一个值，估计输出与目标的距离。</p>
+<p>nn包中有几个不同的损失函数。一个简单的损失是：nn.MSELoss，它计算的是输入和目标之间的均方误差。</p>
+<p>比如说:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">output = net(<span class="built_in">input</span>)</span><br><span class="line">target = torch.randn(<span class="number">10</span>)  <span class="comment"># a dummy target, for example</span></span><br><span class="line">target = target.view(<span class="number">1</span>, -<span class="number">1</span>)  <span class="comment"># make it the same shape as output</span></span><br><span class="line">criterion = nn.MSELoss()</span><br><span class="line"></span><br><span class="line">loss = criterion(output, target)</span><br><span class="line"><span class="built_in">print</span>(loss)点击复制错误复制成功</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tensor(<span class="number">1.3725</span>, grad_fn=&lt;MseLossBackward&gt;)</span><br></pre></td></tr></table></figure>
+
+<p>现在，如果你按照损失的方向，使用它的.grad_fn属性，你会看到一个计算的图表，看起来像这样。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">input</span> -&gt; conv2d -&gt; relu -&gt; maxpool2d -&gt; conv2d -&gt; relu -&gt; maxpool2d</span><br><span class="line">      -&gt; flatten -&gt; linear -&gt; relu -&gt; linear -&gt; relu -&gt; linear</span><br><span class="line">      -&gt; MSELoss</span><br><span class="line">      -&gt; loss</span><br></pre></td></tr></table></figure>
+
+<p>因此，当我们调用loss.backward()时，就会得到整个图相对神经网络参数的微分，并且图中所有require_grad=True的tensor都会有其.grad tensor的梯度积累。</p>
+<p>为了说明问题，让我们回顾一下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(loss.grad_fn)  <span class="comment"># MSELoss</span></span><br><span class="line"><span class="built_in">print</span>(loss.grad_fn.next_functions[<span class="number">0</span>][<span class="number">0</span>])  <span class="comment"># Linear</span></span><br><span class="line"><span class="built_in">print</span>(loss.grad_fn.next_functions[<span class="number">0</span>][<span class="number">0</span>].next_functions[<span class="number">0</span>][<span class="number">0</span>])  <span class="comment"># ReLU</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&lt;MseLossBackward <span class="built_in">object</span> at <span class="number">0x00000228AE1129B0</span>&gt;</span><br><span class="line">&lt;AddmmBackward <span class="built_in">object</span> at <span class="number">0x00000228AE112710</span>&gt;</span><br><span class="line">&lt;AccumulateGrad <span class="built_in">object</span> at <span class="number">0x00000228AE1129B0</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h3><p>为了反向传播误差，我们所要做的就是 loss.backward()。不过你需要清除现有的梯度，否则梯度会被累积到现有的梯度上。</p>
+<p>现在我们将调用 loss.backward()，并看看conv1在回传前后的偏置梯度。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">net.zero_grad()     <span class="comment"># zeroes the gradient buffers of all parameters</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;conv1.bias.grad before backward&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(net.conv1.bias.grad)</span><br><span class="line"></span><br><span class="line">loss.backward()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;conv1.bias.grad after backward&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(net.conv1.bias.grad)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">conv1.bias.grad before backward</span><br><span class="line"><span class="literal">None</span></span><br><span class="line">conv1.bias.grad after backward</span><br><span class="line">tensor([ <span class="number">0.0062</span>,  <span class="number">0.0148</span>,  <span class="number">0.0117</span>, -<span class="number">0.0082</span>, -<span class="number">0.0040</span>,  <span class="number">0.0063</span>])</span><br></pre></td></tr></table></figure>
+
+<p>现在，我们已经看到了如何使用损失函数。</p>
+<p>稍后阅读:</p>
+<p>神经网络包包含各种模块和损失函数，它们构成了深度神经网络的组成部分。<a href="https://pytorch.org/docs/nn">这里</a>有一个带有文档的完整列表。</p>
+<p>现在只剩下的是：</p>
+<p>更新网络的权重</p>
+<h3 id="更新权重"><a href="#更新权重" class="headerlink" title="更新权重"></a>更新权重</h3><p>实践中使用的最简单的更新规则是随机梯度下降法（SGD）。</p>
+<p>weight = weight - learning_rate * gradient</p>
+<p>我们可以用简单的Python代码来实现这一点。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">learning_rate = <span class="number">0.01</span></span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> net.parameters():</span><br><span class="line">    f.data.sub_(f.grad.data * learning_rate)点击复制错误复制成功</span><br></pre></td></tr></table></figure>
+
+<p>然而，由于你使用神经网络，你想使用各种不同的更新规则，如SGD、Nesterov-SGD、Adam、RMSProp等。为了实现这一点，我们建立了一个小包：torch.opt，实现了所有这些方法。使用它是非常简单的。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"></span><br><span class="line"><span class="comment"># create your optimizer</span></span><br><span class="line">optimizer = optim.SGD(net.parameters(), lr=<span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># in your training loop:</span></span><br><span class="line">optimizer.zero_grad()   <span class="comment"># zero the gradient buffers</span></span><br><span class="line">output = net(<span class="built_in">input</span>)</span><br><span class="line">loss = criterion(output, target)</span><br><span class="line">loss.backward()</span><br><span class="line">optimizer.step()    <span class="comment"># Does the update</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用optimizer.zero_grad()观察一下梯度缓冲区是如何被手动设置为零的。这是因为梯度是累积的，正如在Backprop部分所解释的。</p>
+</blockquote>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
+      <categories>
+        <category>pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>pytorch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>pytorch深度学习一</title>
     <url>/post/d9099bcf.html</url>
     <content><![CDATA[<h1 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h1><h3 id="1、线性模型"><a href="#1、线性模型" class="headerlink" title="1、线性模型"></a>1、线性模型</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
