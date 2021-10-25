@@ -19,21 +19,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>test</title>
-    <url>/post/d87f7e0c.html</url>
-    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">test文件</span><br><span class="line">撒很难过船</span><br><span class="line"></span><br><span class="line">大萨达</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2021/10/23/eKFWfmxuVjSndR6.jpg"></p>
-]]></content>
-      <categories>
-        <category>人工智能</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>pytorch深度学习一</title>
     <url>/post/d9099bcf.html</url>
     <content><![CDATA[<h1 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h1><h3 id="1、线性模型"><a href="#1、线性模型" class="headerlink" title="1、线性模型"></a>1、线性模型</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
@@ -88,6 +73,80 @@
       </tags>
   </entry>
   <entry>
+    <title>pytorch深度学习二</title>
+    <url>/post/e289b566.html</url>
+    <content><![CDATA[<h1 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">使用梯度下降进行求解</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/10/25/8clrVKoF6udLbWs.png" alt="image-20211025185053738"></p>
+<p><img src="https://i.loli.net/2021/10/25/9z8ayRL1d32GZeu.png" alt="image-20211025185107672"></p>
+<p><img src="https://i.loli.net/2021/10/25/TLmfhDd1PsZw7JV.png" alt="image-20211025185123456"></p>
+<p><img src="https://i.loli.net/2021/10/25/n3rb2o6QsMfCk78.png" alt="image-20211025185137466"></p>
+<p><img src="https://i.loli.net/2021/10/25/jJsVux5qO2bkcaS.png" alt="image-20211025185150736"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x_data = [<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>]</span><br><span class="line">y_data = [<span class="number">2.0</span>, <span class="number">4.0</span>, <span class="number">6.0</span>]</span><br><span class="line">loss_list = []</span><br><span class="line">w = <span class="number">1.0</span> <span class="comment">#权重初始化为1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 向前传播</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x * w</span><br><span class="line"></span><br><span class="line"><span class="comment"># 损失函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss</span>(<span class="params">x_data, y_data</span>):</span> <span class="comment">#x_data [1.0, 2.0, 3.0] y_data [2.0, 4.0, 6.0]</span></span><br><span class="line">    loss = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> x, y <span class="keyword">in</span> <span class="built_in">zip</span>(x_data, y_data):</span><br><span class="line">        y_predict = forward(x)</span><br><span class="line">        loss += (y_predict - y) ** <span class="number">2</span>  <span class="comment">#总loss</span></span><br><span class="line">    <span class="keyword">return</span> loss / <span class="built_in">len</span>(x_data)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 求梯度</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradient</span>(<span class="params">x_data, y_data</span>):</span></span><br><span class="line">    grad = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> x, y <span class="keyword">in</span> <span class="built_in">zip</span>(x_data, y_data):</span><br><span class="line">        <span class="comment"># 向前传播</span></span><br><span class="line">        temp = forward(x)</span><br><span class="line">        <span class="comment"># 求梯度</span></span><br><span class="line">        grad += <span class="number">2</span> * x *(temp - y)</span><br><span class="line">    <span class="keyword">return</span> grad / <span class="built_in">len</span>(x_data)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># train</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    <span class="comment"># 求损失值</span></span><br><span class="line">    loss_val = loss(x_data, y_data)</span><br><span class="line">    loss_list.append(loss_val)</span><br><span class="line">    <span class="comment"># 求梯度值</span></span><br><span class="line">    grad_val = gradient(x_data, y_data)</span><br><span class="line">    <span class="comment"># 更新参数w</span></span><br><span class="line">    w -= <span class="number">0.01</span> *grad_val</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Epoch: &quot;</span>, epoch, <span class="string">&quot;w = &quot;</span>, w, <span class="string">&quot;loss = &quot;</span>, loss_val)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 绘图</span></span><br><span class="line">plt.plot(<span class="built_in">range</span>(<span class="number">100</span>), loss_list[<span class="number">0</span>:<span class="number">100</span>])</span><br><span class="line">plt.ylabel(<span class="string">&quot;loss&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;Epoch&quot;</span>)</span><br><span class="line">plt.show()  </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/10/25/LxF4phI2AzJckHM.png" alt="image-20211025183650352"></p>
+<p>预测</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">y_predict = []</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> x_data:</span><br><span class="line">    temp = forward(x)</span><br><span class="line">    y_predict.append(temp)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(y_predict)</span><br><span class="line"><span class="comment"># 绘图</span></span><br><span class="line">plt.plot(x_data, y_predict,<span class="string">&#x27;o&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;y_predict&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;x_data&quot;</span>)</span><br><span class="line">plt.show()  </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/10/25/MhnPQLv5yYDtfe4.png" alt="image-20211025184841418"></p>
+]]></content>
+      <categories>
+        <category>pytorch</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>pytorch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>test</title>
+    <url>/post/d87f7e0c.html</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">test文件</span><br><span class="line">撒很难过船</span><br><span class="line"></span><br><span class="line">大萨达</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/10/23/eKFWfmxuVjSndR6.jpg"></p>
+]]></content>
+      <categories>
+        <category>人工智能</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>注意力机制</title>
+    <url>/post/141d1667.html</url>
+    <content><![CDATA[<h1 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">注意力机制的核心在于通过计算一个注意力map，来强调最相关的特征，并避免不相关特征的干扰。</span><br><span class="line">获取注意力map的方法可分为两类：无参数、有参数，如图6所示，主要的区别在于注意图中的重要性权重是否可学习：</span><br><span class="line">注意力机制为深度网络提供了突出给定图像中最重要区域的能力</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1D 通道注意力(任务)</span><br><span class="line">2D 空间注意力</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">对于1D数据来说，在注意力方面，SE仅关注了通道注意力，没考虑空间方面的注意力。</span><br></pre></td></tr></table></figure>
+
+<h3 id="Encoder-Decoder"><a href="#Encoder-Decoder" class="headerlink" title="Encoder-Decoder"></a>Encoder-Decoder</h3><h3 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h3><h3 id="Self-Attention"><a href="#Self-Attention" class="headerlink" title="Self-Attention"></a>Self-Attention</h3>]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>人工智能</tag>
+        <tag>注意力机制</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>人脸识别一</title>
     <url>/post/937cd58.html</url>
     <content><![CDATA[]]></content>
@@ -108,28 +167,9 @@
         <category>生成网络</category>
       </categories>
       <tags>
-        <tag>人工智能</tag>
         <tag>深度学习</tag>
+        <tag>人工智能</tag>
         <tag>生成网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>注意力机制</title>
-    <url>/post/141d1667.html</url>
-    <content><![CDATA[<h1 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">注意力机制的核心在于通过计算一个注意力map，来强调最相关的特征，并避免不相关特征的干扰。</span><br><span class="line">获取注意力map的方法可分为两类：无参数、有参数，如图6所示，主要的区别在于注意图中的重要性权重是否可学习：</span><br><span class="line">注意力机制为深度网络提供了突出给定图像中最重要区域的能力</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1D 通道注意力(任务)</span><br><span class="line">2D 空间注意力</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">对于1D数据来说，在注意力方面，SE仅关注了通道注意力，没考虑空间方面的注意力。</span><br></pre></td></tr></table></figure>
-
-<h3 id="Encoder-Decoder"><a href="#Encoder-Decoder" class="headerlink" title="Encoder-Decoder"></a>Encoder-Decoder</h3><h3 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h3><h3 id="Self-Attention"><a href="#Self-Attention" class="headerlink" title="Self-Attention"></a>Self-Attention</h3>]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
-        <tag>深度学习</tag>
-        <tag>注意力机制</tag>
       </tags>
   </entry>
   <entry>
@@ -140,25 +180,9 @@
         <category>生成网络</category>
       </categories>
       <tags>
-        <tag>人工智能</tag>
         <tag>深度学习</tag>
-        <tag>生成网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>目标检测一</title>
-    <url>/post/f9b95e7d.html</url>
-    <content><![CDATA[<h3 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h3><h3 id="YOLO的改进"><a href="#YOLO的改进" class="headerlink" title="YOLO的改进"></a>YOLO的改进</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1、去掉FPN</span><br><span class="line">yolo-f</span><br><span class="line"></span><br><span class="line">2、anchor Free</span><br><span class="line">yolo-x</span><br><span class="line">将每个位置预测个数从3减少到1，并直接预测四个值（即：到网格的左上角的偏移量和box的高宽）；同时，将中心点设为正样本，并预设了一个尺度范围为每个对象指定FPN级别。</span><br><span class="line"></span><br><span class="line">3、NMS-Free</span><br><span class="line">OneNet</span><br><span class="line">4、</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>目标检测</category>
-      </categories>
-      <tags>
         <tag>人工智能</tag>
-        <tag>目标检测</tag>
+        <tag>生成网络</tag>
       </tags>
   </entry>
   <entry>
@@ -279,8 +303,24 @@
         <category>深度学习基础</category>
       </categories>
       <tags>
-        <tag>人工智能</tag>
         <tag>深度学习</tag>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>目标检测一</title>
+    <url>/post/f9b95e7d.html</url>
+    <content><![CDATA[<h3 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h3><h3 id="YOLO的改进"><a href="#YOLO的改进" class="headerlink" title="YOLO的改进"></a>YOLO的改进</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1、去掉FPN</span><br><span class="line">yolo-f</span><br><span class="line"></span><br><span class="line">2、anchor Free</span><br><span class="line">yolo-x</span><br><span class="line">将每个位置预测个数从3减少到1，并直接预测四个值（即：到网格的左上角的偏移量和box的高宽）；同时，将中心点设为正样本，并预设了一个尺度范围为每个对象指定FPN级别。</span><br><span class="line"></span><br><span class="line">3、NMS-Free</span><br><span class="line">OneNet</span><br><span class="line">4、</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>目标检测</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+        <tag>目标检测</tag>
       </tags>
   </entry>
   <entry>
