@@ -524,7 +524,6 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2、使用requires_grad可以排除一些参数</span><br><span class="line"># construct an optimizer</span><br><span class="line">    params = [p for p in model.parameters() if p.requires_grad]</span><br><span class="line">    optimizer = torch.optim.SGD(params, lr=0.005,</span><br><span class="line">                                momentum=0.9, weight_decay=0.0005)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>深度学习</category>
         <category>pytorch</category>
       </categories>
       <tags>
